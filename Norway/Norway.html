@@ -2,162 +2,278 @@
 <html lang="mk">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Кликни ја Норвешка!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
   <style>
-   body {
-    background-image: url("NorwayDecor.png");
-    background-repeat: repeat-y;
-    background-position: center top;
-    background-size: 100% auto;            
-    background-attachment: scroll;
-    background-color: #001b3a;
-    color: #fff;
-    text-align: center;
-    font-family: 'Comic Sans MS', sans-serif;
-  }
-
-
-    .header {
-      background-color: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(4px);
-      color: #c8102e;
-      padding: 20px;
-      font-size: 28px;
-      font-weight: bold;
-      border-radius: 20px;
-      width: fit-content;
-      margin: 20px auto 10px auto;
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Baloo 2', cursive;
+      background-color: #f4f6f8;
+      background-image: url('NorwayDecor.png');
+      background-repeat: repeat-y;
+      background-size: 100% auto;
+      text-align: center;
     }
 
-    .subheader {
-      background-color: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(4px);
-      color: #00205b;
-      padding: 10px 15px;
-      font-size: 18px;
-      border-radius: 15px;
-      width: fit-content;
-      margin: 10px auto 30px auto;
+    h2, p, h3 {
+      background-color: rgba(255, 255, 255, 0.85);
+      color: #BA0C2F;
+      padding: 10px 20px;
+      border-radius: 12px;
+      display: inline-block;
+      margin-top: 20px;
     }
 
-    #map {
-      max-width: 90%;
-      margin: 0 auto 40px auto;
-      display: block;
-    }
-
-    .game-container {
-      background-color: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(4px);
-      padding: 20px;
-      border-radius: 20px;
-      margin: 20px auto;
+    svg {
       width: 90%;
-      max-width: 600px;
-    }
-
-    #targetWordDisplay {
-      min-height: 40px;
-      font-size: 30px;
-      color: #00205b;
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .letter {
-      background-color: #c8102e; 
-      color: white;
-      border-radius: 50%;
-      padding: 15px 20px;
-      margin: 10px;
-      font-size: 24px;
-      cursor: pointer;
-      transition: transform 0.2s ease, opacity 0.3s ease;
-    }
-
-    .letter:hover {
-      transform: scale(1.1);
+      max-width: 900px;
+      height: auto;
+      margin-top: 20px;
     }
 
     .correct {
-      background-color: #28a745 !important;
+      fill: #4caf50 !important;
     }
 
     .wrong {
-      background-color: #dc3545 !important;
+      fill: #e53935 !important;
+    }
+
+    #msg, #wordMsg {
+      font-size: 1.3rem;
+      color: #00205B;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    #scramble-section {
+      margin-top: 40px;
+    }
+
+    .bubble {
+      display: inline-block;
+      padding: 12px 18px;
+      margin: 8px;
+      font-size: 1.6rem;
+      background: #BA0C2F;
+      color: white;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .bubble:hover {
+      transform: scale(1.1);
+    }
+
+    .answer-letter {
+      display: inline-block;
+      padding: 12px 18px;
+      margin: 8px;
+      font-size: 1.6rem;
+      background: #00205B;
+      color: white;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .answer-letter:hover {
+      transform: scale(1.1);
+    }
+
+    #bubblesContainer, #answerBox {
+      margin: 15px auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    #answerBox {
+      min-height: 60px;
+    }
+
+    .intro-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      margin-top: 30px;
+      padding: 0 10px;
+    }
+
+    .intro-container h2,
+    .intro-container p {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 10px 20px;
+      border-radius: 15px;
+      color: #a4002b;
+      font-weight: bold;
+      margin: 10px 0;
+      text-align: center;
+    }
+
+    #map-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .map-box {
+      border: 4px solid #800020;
+      border-radius: 12px;
+      padding: 10px;
+      background-color: rgba(255,255,255,0.1);
+      display: inline-block;
+      box-shadow: 0 0 15px rgba(128, 0, 32, 0.6);
+    }
+
+    @media (max-width: 600px) {
+      h2, p, h3 {
+        font-size: 1.1rem;
+        padding: 8px 14px;
+      }
+      .bubble, .answer-letter {
+        font-size: 1.3rem;
+        padding: 10px 14px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="header">🌍 Кликни ја Норвешка!</div>
-  <div class="subheader">Ова е континентот Европа. Дали знаеш каде се наоѓа Норвешка? Обиди се!</div>
+  <div class="intro-container">
+    <h2>Кликни ја Норвешка!</h2>
+    <p>Ова е континентот Европа. Дали знаеш каде се наоѓа Норвешка? Обиди се!</p>
+  </div>
+  <div id="map-container"></div>
+  <div id="msg"></div>
 
-  <img id="map" src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Europe_blank_map.svg" alt="Map of Europe">
-
-  <div class="game-container">
-    <div class="subheader">Размести ги буквите за да го добиеш точниот збор</div>
-    <div id="targetWordDisplay"></div>
-    <div id="lettersContainer"></div>
+  <div id="scramble-section">
+    <h3>Размести ги буквите за да го добиеш точниот збор</h3>
+    <div id="bubblesContainer"></div>
+    <div id="answerBox"></div>
+    <div id="wordMsg"></div>
   </div>
 
   <script>
-    const words = ["ОСЛО", "ФЈОРД", "СКАНДИНАВИЈА", "ВИКИНГ"];
-    const chosenWord = words[Math.floor(Math.random() * words.length)];
-    const letters = shuffleArray(chosenWord.split(""));
+    // MAP GAME
+    fetch('europe.svg')
+      .then(r => r.text())
+      .then(svgText => {
+        document.getElementById('map-container').innerHTML = `<div class="map-box">${svgText}</div>`;
+        const svg = document.querySelector('svg');
+        if (!svg.hasAttribute('viewBox')) {
+          const width = svg.getAttribute('width') || 1000;
+          const height = svg.getAttribute('height') || 800;
+          svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+        }
 
-    const container = document.getElementById("lettersContainer");
-    const display = document.getElementById("targetWordDisplay");
+        const correctId = 'no';
+        const msg = document.getElementById('msg');
+        const paths = svg.querySelectorAll('path');
+        paths.forEach(p => {
+          p.style.cursor = 'pointer';
+          p.addEventListener('click', () => handleClick(p));
+        });
+
+        function handleClick(el) {
+          const name = el.getAttribute('title') || "непозната држава";
+          if (el.id.toLowerCase() === correctId) {
+            el.classList.add('correct');
+            msg.textContent = `Браво! Точен одговор!`;
+            paths.forEach(p => p.style.pointerEvents = 'none');
+            addOsloPing(svg);
+          } else {
+            el.classList.add('wrong');
+            msg.textContent = `Тоа не е Норвешка. Пробај повторно!`;
+            setTimeout(() => {
+              el.classList.remove('wrong');
+              msg.textContent = '';
+            }, 1000);
+          }
+        }
+
+        function addOsloPing(svg) {
+          if (svg.querySelector('#osloPing')) return;
+          const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          circle.setAttribute("cx", "310");
+          circle.setAttribute("cy", "220");
+          circle.setAttribute("r", "6");
+          circle.setAttribute("fill", "red");
+          circle.setAttribute("stroke", "white");
+          circle.setAttribute("stroke-width", "2");
+          circle.setAttribute("id", "osloPing");
+          svg.appendChild(circle);
+        }
+      });
+
+    // SCRAMBLE GAME
+    const wordList = ["ОСЛО", "ФЈОРД", "СКАНДИНАВИЈА", "ВИКИНГ"];
+    const correctWord = wordList[Math.floor(Math.random() * wordList.length)];
+    const letters = shuffleArray(correctWord.split(""));
+    const bubblesContainer = document.getElementById("bubblesContainer");
+    const answerBox = document.getElementById("answerBox");
+    const wordMsg = document.getElementById("wordMsg");
 
     function shuffleArray(array) {
       return array.sort(() => Math.random() - 0.5);
     }
 
-    function renderLetters() {
-      container.innerHTML = "";
-      letters.forEach((letter, i) => {
+    function renderBubbles() {
+      bubblesContainer.innerHTML = "";
+      letters.forEach((letter, index) => {
         const span = document.createElement("span");
-        span.className = "letter";
         span.textContent = letter;
-        span.dataset.index = i;
-        span.addEventListener("click", () => {
-          display.appendChild(span);
-          span.remove();
-          updateListeners();
-          checkWord();
-        });
-        container.appendChild(span);
+        span.className = "bubble";
+        span.dataset.index = index;
+        span.addEventListener("click", () => selectLetter(span));
+        bubblesContainer.appendChild(span);
       });
     }
 
-    function updateListeners() {
-      [...display.children].forEach(span => {
-        span.onclick = () => {
-          container.appendChild(span);
-          span.remove();
-        };
+    function selectLetter(el) {
+      const letter = el.textContent;
+      el.style.display = "none";
+
+      const span = document.createElement("span");
+      span.textContent = letter;
+      span.className = "answer-letter";
+      span.dataset.index = el.dataset.index;
+      span.addEventListener("click", () => {
+        span.remove();
+        bubblesContainer.querySelector(`[data-index='${el.dataset.index}']`).style.display = "inline-block";
+        checkAnswer();
       });
+      answerBox.appendChild(span);
+      checkAnswer();
     }
 
-    function checkWord() {
-      const guess = [...display.children].map(span => span.textContent).join("");
-      if (guess.length === chosenWord.length) {
-        if (guess === chosenWord) {
-          display.classList.add("correct");
-          display.classList.remove("wrong");
+    function checkAnswer() {
+      const current = Array.from(answerBox.children).map(s => s.textContent).join("");
+      if (current.length === correctWord.length) {
+        if (current === correctWord) {
+          wordMsg.textContent = "✅ Браво! Го погоди точниот збор!";
+          wordMsg.style.color = "green";
         } else {
-          display.classList.add("wrong");
-          display.classList.remove("correct");
-          setTimeout(() => {
-            while (display.firstChild) container.appendChild(display.firstChild);
-            display.classList.remove("wrong");
-          }, 1000);
+          wordMsg.textContent = "❌ Обиди се повторно!";
+          wordMsg.style.color = "red";
+          setTimeout(() => resetGame(), 1000);
         }
+      } else {
+        wordMsg.textContent = "";
       }
     }
 
-    renderLetters();
+    function resetGame() {
+      answerBox.innerHTML = "";
+      renderBubbles();
+    }
+
+    renderBubbles();
   </script>
+
 </body>
 </html>
