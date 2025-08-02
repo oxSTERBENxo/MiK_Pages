@@ -185,7 +185,6 @@
             el.classList.add('correct');
             msg.textContent = `Браво! Точен одговор!`;
             paths.forEach(p => p.style.pointerEvents = 'none');
-            addOsloPing(svg);
           } else {
             el.classList.add('wrong');
             msg.textContent = `Тоа не е Норвешка. Пробај повторно!`;
@@ -196,18 +195,6 @@
           }
         }
 
-        function addOsloPing(svg) {
-          if (svg.querySelector('#osloPing')) return;
-          const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-          circle.setAttribute("cx", "310");
-          circle.setAttribute("cy", "220");
-          circle.setAttribute("r", "6");
-          circle.setAttribute("fill", "red");
-          circle.setAttribute("stroke", "white");
-          circle.setAttribute("stroke-width", "2");
-          circle.setAttribute("id", "osloPing");
-          svg.appendChild(circle);
-        }
       });
 
     // SCRAMBLE GAME
