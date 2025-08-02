@@ -183,11 +183,11 @@
           const name = el.getAttribute('title') || "непозната држава";
           if (el.id.toLowerCase() === correctId) {
             el.classList.add('correct');
-            msg.textContent = `Браво! Точен одговор!`;
+            msg.innerHTML = `<span style="color: red;">Браво! Точен одговор!</span>`;
             paths.forEach(p => p.style.pointerEvents = 'none');
           } else {
             el.classList.add('wrong');
-            msg.textContent = `Тоа не е Норвешка. Пробај повторно!`;
+            msg.innerHTML = `<span style="color: red;">Тоа не е Норвешка. Пробај повторно!</span>`;
             setTimeout(() => {
               el.classList.remove('wrong');
               msg.textContent = '';
