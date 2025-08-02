@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+  <meta charset="UTF-8">
+  <title>Кликни ја Норвешка!</title>
+  <style>
+   body {
+    background-image: url("NorwayDecor.png");
+    background-repeat: repeat-y;
+    background-position: center top;
+    background-size: 100% auto;            
+    background-attachment: scroll;
+    background-color: #001b3a;
+    color: #fff;
+    text-align: center;
+    font-family: 'Comic Sans MS', sans-serif;
+  }
+
+
+    .header {
+      background-color: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(4px);
+      color: #c8102e;
+      padding: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      border-radius: 20px;
+      width: fit-content;
+      margin: 20px auto 10px auto;
+    }
+
+    .subheader {
+      background-color: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(4px);
+      color: #00205b;
+      padding: 10px 15px;
+      font-size: 18px;
+      border-radius: 15px;
+      width: fit-content;
+      margin: 10px auto 30px auto;
+    }
+
+    #map {
+      max-width: 90%;
+      margin: 0 auto 40px auto;
+      display: block;
+    }
+
+    .game-container {
+      background-color: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(4px);
+      padding: 20px;
+      border-radius: 20px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 600px;
+    }
+
+    #targetWordDisplay {
+      min-height: 40px;
+      font-size: 30px;
+      color: #00205b;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .letter {
+      background-color: #c8102e; 
+      color: white;
+      border-radius: 50%;
+      padding: 15px 20px;
+      margin: 10px;
+      font-size: 24px;
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.3s ease;
+    }
+
+    .letter:hover {
+      transform: scale(1.1);
+    }
+
+    .correct {
+      background-color: #28a745 !important;
+    }
+
+    .wrong {
+      background-color: #dc3545 !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">🌍 Кликни ја Норвешка!</div>
+  <div class="subheader">Ова е континентот Европа. Дали знаеш каде се наоѓа Норвешка? Обиди се!</div>
+
+  <img id="map" src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Europe_blank_map.svg" alt="Map of Europe">
+
+  <div class="game-container">
+    <div class="subheader">Размести ги буквите за да го добиеш точниот збор</div>
+    <div id="targetWordDisplay"></div>
+    <div id="lettersContainer"></div>
+  </div>
+
+  <script>
+    const words = ["ОСЛО", "ФЈОРД", "СКАНДИНАВИЈА", "ВИКИНГ"];
+    const chosenWord = words[Math.floor(Math.random() * words.length)];
+    const letters = shuffleArray(chosenWord.split(""));
+
+    const container = document.getElementById("lettersContainer");
+    const display = document.getElementById("targetWordDisplay");
+
+    function shuffleArray(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    function renderLetters() {
+      container.innerHTML = "";
+      letters.forEach((letter, i) => {
+        const span = document.createElement("span");
+        span.className = "letter";
+        span.textContent = letter;
+        span.dataset.index = i;
+        span.addEventListener("click", () => {
+          display.appendChild(span);
+          span.remove();
+          updateListeners();
+          checkWord();
+        });
+        container.appendChild(span);
+      });
+    }
+
+    function updateListeners() {
+      [...display.children].forEach(span => {
+        span.onclick = () => {
+          container.appendChild(span);
+          span.remove();
+        };
+      });
+    }
+
+    function checkWord() {
+      const guess = [...display.children].map(span => span.textContent).join("");
+      if (guess.length === chosenWord.length) {
+        if (guess === chosenWord) {
+          display.classList.add("correct");
+          display.classList.remove("wrong");
+        } else {
+          display.classList.add("wrong");
+          display.classList.remove("correct");
+          setTimeout(() => {
+            while (display.firstChild) container.appendChild(display.firstChild);
+            display.classList.remove("wrong");
+          }, 1000);
+        }
+      }
+    }
+
+    renderLetters();
+  </script>
+</body>
+</html>
